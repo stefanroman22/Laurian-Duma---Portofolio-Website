@@ -11,7 +11,7 @@ export function Taskbar() {
   }, [])
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-10 bg-surface-container z-[9999] flex items-center px-4 gap-2">
+    <div className="fixed bottom-0 left-0 right-0 h-10 bg-surface-container-low border-t border-outline/10 z-[9999] flex items-center px-4 gap-2">
       <div className="flex-1 flex items-center gap-1 overflow-hidden">
         {Object.values(windows).map((win) => (
           <button

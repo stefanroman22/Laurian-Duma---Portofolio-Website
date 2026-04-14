@@ -11,14 +11,15 @@ interface OutputLine {
 
 export function Terminal() {
   const [lines, setLines] = useState<OutputLine[]>([
-    { id: 0, text: 'Ghost Shell OS v1.0.0 — type "help" for available commands', isInput: false },
+    { id: 0, text: 'Ghost Shell OS v1.0 — Initializing secure connection...', isInput: false },
+    { id: 1, text: "Type 'help' for available commands.", isInput: false },
   ])
   const [input, setInput] = useState('')
   const [cmdHistory, setCmdHistory] = useState<string[]>([])
   const [historyIdx, setHistoryIdx] = useState(-1)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-  const lineId = useRef(1)
+  const lineId = useRef(2)
   const { openWindow } = useWindowStore()
 
   useEffect(() => {
@@ -85,7 +86,7 @@ export function Terminal() {
       onClick={() => inputRef.current?.focus()}
     >
       {/* CRT scanline overlay */}
-      <div className="pointer-events-none absolute inset-0 bg-scanline z-10" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 terminal-scanlines z-10" aria-hidden="true" />
 
       <div className="relative z-20 h-full flex flex-col p-3 overflow-y-auto">
         <div className="flex-1">
@@ -99,7 +100,7 @@ export function Terminal() {
           ))}
         </div>
         <div className="flex items-center mt-1 pt-1">
-          <span className="text-primary mr-2 select-none">$</span>
+          <span className="text-primary mr-2 select-none">[LD@ghost ~]$</span>
           <input
             ref={inputRef}
             value={input}

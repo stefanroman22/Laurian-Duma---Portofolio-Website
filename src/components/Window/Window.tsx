@@ -48,12 +48,11 @@ export function Window({
         width: size.width,
         height: size.height,
         zIndex,
+        boxShadow: isFocused
+          ? '0px 20px 40px rgba(0, 17, 255, 0.12), 0 0 0 1px rgba(73,72,71,0.15)'
+          : '0px 20px 40px rgba(0, 17, 255, 0.06)',
       }}
-      className={[
-        'bg-surface-variant backdrop-blur-[40px]',
-        'rounded-lg overflow-hidden shadow-window',
-        isFocused ? 'ring-1 ring-outline-variant/15' : 'ring-0',
-      ].join(' ')}
+      className="glass-panel rounded-lg overflow-hidden"
     >
       <div
         className="window-drag-handle cursor-grab active:cursor-grabbing"
@@ -65,7 +64,7 @@ export function Window({
           onMinimize={() => minimizeWindow(id)}
         />
       </div>
-      <div className="p-4 h-[calc(100%-2.5rem)] overflow-auto bg-surface-container">
+      <div className="p-4 h-[calc(100%-2.25rem)] overflow-auto bg-surface-container-low">
         <Component />
       </div>
     </motion.div>

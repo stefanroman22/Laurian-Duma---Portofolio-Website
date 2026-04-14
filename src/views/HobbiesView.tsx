@@ -2,17 +2,17 @@ import { HOBBIES } from '../constants/hobbies'
 
 export function HobbiesView() {
   return (
-    <div className="space-y-6 font-sans">
-      <h2 className="font-display text-headline-md text-on-surface">Hobbies</h2>
-      <div className="space-y-8">
+    <div className="font-mono space-y-4 text-xs">
+      <p className="text-[10px] text-on-surface-variant tracking-widest uppercase">
+        CLASSIFICATION: UNCLASSIFIED // INTERESTS_FILE
+      </p>
+      <div className="space-y-3">
         {HOBBIES.map((hobby) => (
-          <div key={hobby.id} className="flex gap-4">
-            <span className="text-2xl leading-tight shrink-0" aria-hidden="true">{hobby.icon}</span>
-            <div className="space-y-1">
-              <h3 className="text-headline-sm text-on-surface">{hobby.name}</h3>
-              <p className="text-body-md text-on-surface-variant leading-relaxed">
-                {hobby.description}
-              </p>
+          <div key={hobby.id} className="bg-surface-container rounded-sm p-3 flex gap-3 cyber-glow">
+            <span className="text-xl leading-tight shrink-0" aria-hidden="true">{hobby.icon}</span>
+            <div className="space-y-0.5">
+              <p className="text-xs text-on-surface uppercase tracking-wide">{hobby.name}</p>
+              <p className="text-xs text-on-surface-variant font-sans leading-relaxed">{hobby.description}</p>
             </div>
           </div>
         ))}

@@ -4,33 +4,30 @@ const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`
 
 export function ProjectsView() {
   return (
-    <div className="space-y-8 font-sans">
-      <h2 className="font-display text-headline-md text-on-surface">Projects</h2>
+    <div className="font-mono space-y-4 text-xs">
+      <p className="text-[10px] text-on-surface-variant tracking-widest uppercase">
+        CLASSIFICATION: RESTRICTED // PROJECT_ARCHIVE
+      </p>
       {PROJECTS.map((project) => (
-        <div key={project.id} className="space-y-3">
-          <div className="flex items-baseline justify-between gap-4">
-            <h3 className="text-headline-sm text-on-surface">{project.name}</h3>
+        <div key={project.id} className="bg-surface-container rounded-sm p-4 space-y-3">
+          <div className="flex items-start justify-between gap-3">
+            <p className="text-sm text-on-surface font-medium">{project.name}</p>
             {project.url && (
               <a
-                aria-label={`${project.name} — live site`}
                 href={toHref(project.url)}
                 target="_blank"
                 rel="noreferrer"
-                className="font-mono text-label-sm text-primary hover:text-primary-container transition-colors shrink-0"
+                aria-label={`${project.name} — live site`}
+                className="text-[10px] text-primary hover:text-primary-container transition-colors shrink-0 flex items-center gap-1"
               >
-                ↗ live
+                <span aria-hidden="true">↗</span> LIVE
               </a>
             )}
           </div>
-          <p className="text-body-md text-on-surface-variant leading-relaxed">
-            {project.description}
-          </p>
-          <div className="flex flex-wrap gap-2">
+          <p className="text-on-surface-variant font-sans leading-relaxed">{project.description}</p>
+          <div className="flex flex-wrap gap-1.5">
             {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="font-mono text-label-sm text-tertiary bg-surface-container-high px-2 py-0.5 rounded-sm"
-              >
+              <span key={tag} className="px-2 py-0.5 bg-surface-container-high text-tertiary text-[10px] rounded-sm">
                 {tag}
               </span>
             ))}
@@ -40,9 +37,9 @@ export function ProjectsView() {
               href={toHref(project.repo)}
               target="_blank"
               rel="noreferrer"
-              className="font-mono text-label-sm text-on-surface-variant hover:text-on-surface transition-colors"
+              className="text-[10px] text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1"
             >
-              {project.repo}
+              <span aria-hidden="true">↗</span> {project.repo}
             </a>
           )}
         </div>

@@ -4,43 +4,38 @@ const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`
 
 export function ContactView() {
   return (
-    <div className="space-y-6 font-sans">
-      <h2 className="font-display text-headline-md text-on-surface">Contact</h2>
-      <p className="text-body-md text-on-surface-variant leading-relaxed">
-        Interested in working together? I'm currently open to senior engineer and tech-lead
-        opportunities. Reach out via email or find me on the platforms below.
+    <div className="font-mono space-y-4 text-xs">
+      <p className="text-[10px] text-on-surface-variant tracking-widest uppercase">
+        CLASSIFICATION: UNCLASSIFIED // CONTACT_PROTOCOLS
       </p>
-      <div className="space-y-4 pt-2">
+      <p className="text-on-surface-variant font-sans leading-relaxed">
+        Secure communication channels available. Currently open to senior engineer and tech-lead opportunities.
+      </p>
+      <div className="space-y-2">
         <a
           href={`mailto:${CV_DATA.email}`}
-          className="flex items-center gap-3 p-3 bg-surface-container-high rounded-lg hover:bg-surface-container-highest transition-colors group"
+          className="flex items-center gap-3 p-3 bg-surface-container rounded-sm hover:bg-surface-container-high transition-colors group cyber-glow"
         >
-          <span className="font-mono text-label-sm text-primary w-16 shrink-0">email</span>
-          <span className="font-mono text-label-sm text-on-surface-variant group-hover:text-on-surface transition-colors">
-            {CV_DATA.email}
-          </span>
+          <span className="text-[10px] text-primary w-16 shrink-0 tracking-wide">EMAIL</span>
+          <span className="text-on-surface-variant group-hover:text-on-surface transition-colors">{CV_DATA.email}</span>
         </a>
         <a
           href={toHref(CV_DATA.github)}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-3 p-3 bg-surface-container-high rounded-lg hover:bg-surface-container-highest transition-colors group"
+          className="flex items-center gap-3 p-3 bg-surface-container rounded-sm hover:bg-surface-container-high transition-colors group cyber-glow"
         >
-          <span className="font-mono text-label-sm text-primary w-16 shrink-0">github</span>
-          <span className="font-mono text-label-sm text-on-surface-variant group-hover:text-on-surface transition-colors">
-            {CV_DATA.github}
-          </span>
+          <span className="text-[10px] text-primary w-16 shrink-0 tracking-wide">GITHUB</span>
+          <span className="text-on-surface-variant group-hover:text-on-surface transition-colors">{CV_DATA.github}</span>
         </a>
         <a
           href={toHref(CV_DATA.linkedin)}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-3 p-3 bg-surface-container-high rounded-lg hover:bg-surface-container-highest transition-colors group"
+          className="flex items-center gap-3 p-3 bg-surface-container rounded-sm hover:bg-surface-container-high transition-colors group cyber-glow"
         >
-          <span className="font-mono text-label-sm text-primary w-16 shrink-0">linkedin</span>
-          <span className="font-mono text-label-sm text-on-surface-variant group-hover:text-on-surface transition-colors">
-            {CV_DATA.linkedin}
-          </span>
+          <span className="text-[10px] text-primary w-16 shrink-0 tracking-wide">LINKEDIN</span>
+          <span className="text-on-surface-variant group-hover:text-on-surface transition-colors">{CV_DATA.linkedin}</span>
         </a>
       </div>
     </div>
