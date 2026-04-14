@@ -27,15 +27,19 @@ export const useWindowStore = create<WindowStoreState>((set) => ({
     }),
 
   minimizeWindow: (id) =>
-    set((state) => ({
-      windows: {
-        ...state.windows,
-        [id]: { ...state.windows[id], isMinimized: true, isFocused: false },
-      },
-    })),
+    set((state) => {
+      if (!state.windows[id]) return state
+      return {
+        windows: {
+          ...state.windows,
+          [id]: { ...state.windows[id], isMinimized: true, isFocused: false },
+        },
+      }
+    }),
 
   restoreWindow: (id) =>
     set((state) => {
+      if (!state.windows[id]) return state
       const newZIndex = state.maxZIndex + 1
       const unfocused = Object.fromEntries(
         Object.entries(state.windows).map(([k, w]) => [k, { ...w, isFocused: false }])
@@ -51,6 +55,7 @@ export const useWindowStore = create<WindowStoreState>((set) => ({
 
   focusWindow: (id) =>
     set((state) => {
+      if (!state.windows[id]) return state
       const newZIndex = state.maxZIndex + 1
       const unfocused = Object.fromEntries(
         Object.entries(state.windows).map(([k, w]) => [k, { ...w, isFocused: false }])
@@ -65,12 +70,14 @@ export const useWindowStore = create<WindowStoreState>((set) => ({
     }),
 
   updatePosition: (id, position) =>
-    set((state) => ({
-      windows: { ...state.windows, [id]: { ...state.windows[id], position } },
-    })),
+    set((state) => {
+      if (!state.windows[id]) return state
+      return { windows: { ...state.windows, [id]: { ...state.windows[id], position } } }
+    }),
 
   updateSize: (id, size) =>
-    set((state) => ({
-      windows: { ...state.windows, [id]: { ...state.windows[id], size } },
-    })),
+    set((state) => {
+      if (!state.windows[id]) return state
+      return { windows: { ...state.windows, [id]: { ...state.windows[id], size } } }
+    }),
 }))
