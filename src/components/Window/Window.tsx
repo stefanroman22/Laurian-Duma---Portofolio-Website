@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useDragControls } from 'framer-motion'
 import type { ComponentType } from 'react'
 import { WindowTitleBar } from './WindowTitleBar'
 import { useWindowStore } from '../../stores/useWindowStore'
@@ -19,6 +19,7 @@ export function Window({
   position, size, zIndex, isMinimized, isFocused,
 }: WindowProps) {
   const { closeWindow, minimizeWindow, focusWindow, updatePosition } = useWindowStore()
+  const dragControls = useDragControls()
 
   if (isMinimized) return null
 
@@ -31,7 +32,8 @@ export function Window({
       transition={{ duration: 0.3, ease: 'easeInOut' }}
       drag
       dragMomentum={false}
-      dragHandle=".window-drag-handle"
+      dragListener={false}
+      dragControls={dragControls}
       onDragEnd={(_, info) => {
         updatePosition(id, {
           x: position.x + info.offset.x,
@@ -53,7 +55,10 @@ export function Window({
         isFocused ? 'ring-1 ring-outline-variant/15' : 'ring-0',
       ].join(' ')}
     >
-      <div className="window-drag-handle">
+      <div
+        className="window-drag-handle cursor-grab active:cursor-grabbing"
+        onPointerDown={(e) => dragControls.start(e)}
+      >
         <WindowTitleBar
           title={title}
           onClose={() => closeWindow(id)}
