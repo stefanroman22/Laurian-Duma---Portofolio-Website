@@ -101,10 +101,10 @@ export function Desktop() {
         {/* Brand */}
         <div className="flex items-center gap-2">
           <span className="text-tertiary text-sm" aria-hidden="true">⚡</span>
-          <span className="font-mono text-xs text-tertiary tracking-widest select-none">GHOST_SHELL_OS</span>
+          <span className="font-mono text-xs text-tertiary tracking-widest select-none hidden sm:inline">GHOST_SHELL_OS</span>
         </div>
         {/* Nav tabs */}
-        <nav className="flex items-center gap-1 flex-1" aria-label="OS navigation">
+        <nav className="hidden sm:flex items-center gap-1 flex-1" aria-label="OS navigation">
           {navTabs.map(tab => (
             <button
               key={tab}
@@ -129,7 +129,7 @@ export function Desktop() {
       {/* ── MAIN AREA ── */}
       <div className="flex flex-1 overflow-hidden">
         {/* ── LEFT SIDEBAR ── */}
-        <aside className="flex-shrink-0 w-44 bg-surface-container-low flex flex-col z-[9999]">
+        <aside className="flex-shrink-0 w-44 bg-surface-container-low hidden md:flex flex-col z-[9999]">
           {/* Profile card */}
           <div className="px-3 py-4 border-b border-outline/10">
             <div className="flex items-center gap-2 mb-2">
