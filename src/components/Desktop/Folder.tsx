@@ -35,9 +35,15 @@ export function Folder({
       tabIndex={0}
       aria-label={`Open ${label}`}
       onDoubleClick={handleDoubleClick}
-      onKeyDown={(e) => e.key === 'Enter' && handleDoubleClick()}
-      style={{ position: 'absolute', left: position.x, top: position.y }}
-      className="flex flex-col items-center gap-1 p-2 rounded cursor-pointer select-none
+      onKeyDown={(e) => {
+        if (e.repeat) return
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          handleDoubleClick()
+        }
+      }}
+      style={{ left: position.x, top: position.y }}
+      className="absolute flex flex-col items-center gap-1 p-2 rounded cursor-pointer select-none
                  hover:bg-surface-container-high/60 transition-colors w-16 group"
     >
       <span className="text-3xl leading-none">{icon}</span>

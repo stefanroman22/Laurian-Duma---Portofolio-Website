@@ -16,8 +16,8 @@ export function ExperienceView() {
             <p className="font-mono text-label-sm text-tertiary">{entry.company}</p>
           </div>
           <ul className="space-y-2">
-            {entry.bullets.map((bullet, i) => (
-              <li key={i} className="flex gap-3 text-body-md text-on-surface-variant">
+            {entry.bullets.map((bullet) => (
+              <li key={bullet} className="flex gap-3 text-body-md text-on-surface-variant">
                 <span className="text-primary select-none shrink-0">›</span>
                 {bullet}
               </li>

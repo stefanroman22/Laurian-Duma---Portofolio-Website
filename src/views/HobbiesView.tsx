@@ -7,7 +7,7 @@ export function HobbiesView() {
       <div className="space-y-8">
         {HOBBIES.map((hobby) => (
           <div key={hobby.id} className="flex gap-4">
-            <span className="text-2xl leading-tight shrink-0">{hobby.icon}</span>
+            <span className="text-2xl leading-tight shrink-0" aria-hidden="true">{hobby.icon}</span>
             <div className="space-y-1">
               <h3 className="text-headline-sm text-on-surface">{hobby.name}</h3>
               <p className="text-body-md text-on-surface-variant leading-relaxed">

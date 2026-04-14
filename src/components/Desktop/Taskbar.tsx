@@ -16,6 +16,8 @@ export function Taskbar() {
         {Object.values(windows).map((win) => (
           <button
             key={win.id}
+            aria-pressed={win.isFocused && !win.isMinimized}
+            aria-label={win.isMinimized ? `${win.title} (minimized)` : win.title}
             onClick={() => (win.isMinimized ? restoreWindow(win.id) : focusWindow(win.id))}
             className={[
               'px-3 py-1 font-mono text-label-sm rounded-sm transition-colors truncate max-w-[120px]',

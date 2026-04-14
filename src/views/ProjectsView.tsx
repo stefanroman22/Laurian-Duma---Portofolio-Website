@@ -1,5 +1,7 @@
 import { PROJECTS } from '../constants/projects'
 
+const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`)
+
 export function ProjectsView() {
   return (
     <div className="space-y-8 font-sans">
@@ -10,7 +12,8 @@ export function ProjectsView() {
             <h3 className="text-headline-sm text-on-surface">{project.name}</h3>
             {project.url && (
               <a
-                href={`https://${project.url}`}
+                aria-label={`${project.name} — live site`}
+                href={toHref(project.url)}
                 target="_blank"
                 rel="noreferrer"
                 className="font-mono text-label-sm text-primary hover:text-primary-container transition-colors shrink-0"
@@ -34,7 +37,7 @@ export function ProjectsView() {
           </div>
           {project.repo && (
             <a
-              href={`https://${project.repo}`}
+              href={toHref(project.repo)}
               target="_blank"
               rel="noreferrer"
               className="font-mono text-label-sm text-on-surface-variant hover:text-on-surface transition-colors"

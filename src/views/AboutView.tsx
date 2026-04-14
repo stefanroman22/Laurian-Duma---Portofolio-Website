@@ -1,5 +1,7 @@
 import { CV_DATA } from '../constants/cv'
 
+const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`)
+
 export function AboutView() {
   return (
     <div className="space-y-6 font-sans text-on-surface-variant">
@@ -16,7 +18,7 @@ export function AboutView() {
           {CV_DATA.email}
         </a>
         <a
-          href={`https://${CV_DATA.github}`}
+          href={toHref(CV_DATA.github)}
           target="_blank"
           rel="noreferrer"
           className="block font-mono text-label-sm text-on-surface-variant hover:text-on-surface transition-colors"
@@ -24,7 +26,7 @@ export function AboutView() {
           {CV_DATA.github}
         </a>
         <a
-          href={`https://${CV_DATA.linkedin}`}
+          href={toHref(CV_DATA.linkedin)}
           target="_blank"
           rel="noreferrer"
           className="block font-mono text-label-sm text-on-surface-variant hover:text-on-surface transition-colors"

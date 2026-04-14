@@ -1,5 +1,7 @@
 import { CV_DATA } from '../constants/cv'
 
+const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`)
+
 export function ContactView() {
   return (
     <div className="space-y-6 font-sans">
@@ -19,7 +21,7 @@ export function ContactView() {
           </span>
         </a>
         <a
-          href={`https://${CV_DATA.github}`}
+          href={toHref(CV_DATA.github)}
           target="_blank"
           rel="noreferrer"
           className="flex items-center gap-3 p-3 bg-surface-container-high rounded-lg hover:bg-surface-container-highest transition-colors group"
@@ -30,7 +32,7 @@ export function ContactView() {
           </span>
         </a>
         <a
-          href={`https://${CV_DATA.linkedin}`}
+          href={toHref(CV_DATA.linkedin)}
           target="_blank"
           rel="noreferrer"
           className="flex items-center gap-3 p-3 bg-surface-container-high rounded-lg hover:bg-surface-container-highest transition-colors group"
