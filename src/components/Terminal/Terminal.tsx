@@ -88,7 +88,7 @@ export function Terminal() {
       {/* CRT scanline overlay */}
       <div className="pointer-events-none absolute inset-0 terminal-scanlines z-10" aria-hidden="true" />
 
-      <div className="relative z-20 h-full flex flex-col p-3 overflow-y-auto">
+      <div className="relative z-20 h-full flex flex-col p-3 overflow-y-auto os-scrollbar">
         <div className="flex-1">
           {lines.map((line) => (
             <div

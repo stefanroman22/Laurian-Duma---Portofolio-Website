@@ -75,3 +75,26 @@ body {
   background: #1a1919;
   border-left-color: #69fd5d;
 }
+
+/* ── Custom scrollbar — Ghost Shell OS theme ── */
+.os-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #494847 transparent;
+}
+.os-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.os-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.os-scrollbar::-webkit-scrollbar-thumb {
+  background: #494847;
+  border-radius: 2px;
+}
+.os-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #777575;
+}
+.os-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}

@@ -1,0 +1,13 @@
+{
+  "projectSlug": "laurian-duma-portfolio",
+  "endpoint": "http://localhost:8001/content",
+  "services": {
+    "cv": "key_value",
+    "skills": "key_value",
+    "experience": "repeater",
+    "projects_list": "repeater",
+    "hobbies": "repeater",
+    "hero_image": "image",
+    "contact_form": "email_config"
+  }
+}

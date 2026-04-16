@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFolderStore } from '../../stores/useFolderStore'
 import { useWindowStore } from '../../stores/useWindowStore'
+import { useCMSContent } from '../../lib/cms'
 import { registerWindow } from '../../constants/windowRegistry'
 import { WindowManager } from '../Window/WindowManager'
 import { Taskbar } from './Taskbar'
@@ -11,13 +12,19 @@ import { HobbiesView } from '../../views/HobbiesView'
 import { ContactView } from '../../views/ContactView'
 import { Terminal } from '../Terminal/Terminal'
 
-const FOLDER_DEFS = [
-  { id: 'f-about',      label: 'about',      windowId: 'about',      component: AboutView,      size: { width: 520, height: 480 } },
-  { id: 'f-projects',   label: 'projects',   windowId: 'projects',   component: ProjectsView,   size: { width: 700, height: 520 } },
-  { id: 'f-experience', label: 'experience', windowId: 'experience', component: ExperienceView, size: { width: 660, height: 520 } },
-  { id: 'f-hobbies',    label: 'hobbies',    windowId: 'hobbies',    component: HobbiesView,    size: { width: 520, height: 440 } },
-  { id: 'f-contact',    label: 'contact',    windowId: 'contact',    component: ContactView,    size: { width: 480, height: 380 } },
-]
+// Heights capped at 45 % of viewport at definition time so windows never
+// open below the screen midpoint. User can freely resize after opening.
+function makeFolderDefs() {
+  const cap = typeof window !== 'undefined' ? Math.floor(window.innerHeight * 0.45) : 520
+  const h = (desired: number) => Math.min(desired, cap)
+  return [
+    { id: 'f-about',      label: 'about',      windowId: 'about',      component: AboutView,      size: { width: 680, height: h(600) } },
+    { id: 'f-projects',   label: 'projects',   windowId: 'projects',   component: ProjectsView,   size: { width: 760, height: h(640) } },
+    { id: 'f-experience', label: 'experience', windowId: 'experience', component: ExperienceView, size: { width: 720, height: h(620) } },
+    { id: 'f-hobbies',    label: 'hobbies',    windowId: 'hobbies',    component: HobbiesView,    size: { width: 600, height: h(520) } },
+    { id: 'f-contact',    label: 'contact',    windowId: 'contact',    component: ContactView,    size: { width: 560, height: h(460) } },
+  ]
+}
 
 function Clock() {
   const [now, setNow] = useState(() => new Date())
@@ -35,10 +42,15 @@ function Clock() {
 export function Desktop() {
   const { initFolders } = useFolderStore()
   const { openWindow, windows } = useWindowStore()
+  const { data: cms } = useCMSContent()
+  const heroUrl = (cms?.content.hero_image as { url?: string } | undefined)?.url ?? null
+  const [heroError, setHeroError] = useState(false)
   const [activeNav, setActiveNav] = useState('system')
+  // Computed once — heights capped to 45 % of viewport at mount time.
+  const [folderDefs] = useState(makeFolderDefs)
 
   useEffect(() => {
-    FOLDER_DEFS.forEach(({ windowId, label, component, size }) => {
+    folderDefs.forEach(({ windowId, label, component, size }) => {
       registerWindow(windowId, { component, defaultSize: size, defaultTitle: label })
     })
     registerWindow('terminal', {
@@ -48,7 +60,7 @@ export function Desktop() {
     })
 
     initFolders(
-      FOLDER_DEFS.map(({ id, label, windowId }, i) => ({
+      folderDefs.map(({ id, label, windowId }, i) => ({
         id, label, icon: '📁', windowId, position: { x: 28, y: 32 + i * 40 }, isOpen: false,
       }))
     )
@@ -64,7 +76,7 @@ export function Desktop() {
   }, [])
 
   const handleSidebarOpen = (windowId: string) => {
-    const def = FOLDER_DEFS.find(d => d.windowId === windowId)
+    const def = folderDefs.find(d => d.windowId === windowId)
     if (def) {
       openWindow({
         id: def.windowId,
@@ -133,8 +145,17 @@ export function Desktop() {
           {/* Profile card */}
           <div className="px-3 py-4 border-b border-outline/10">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-sm bg-primary/20 flex items-center justify-center flex-shrink-0">
-                <span className="font-mono text-xs text-primary font-medium">LD</span>
+              <div className="w-8 h-8 rounded-sm bg-primary/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                {heroUrl && !heroError ? (
+                  <img
+                    src={heroUrl}
+                    alt="Laurian Duma"
+                    className="w-full h-full object-cover"
+                    onError={() => setHeroError(true)}
+                  />
+                ) : (
+                  <span className="font-mono text-xs text-primary font-medium">LD</span>
+                )}
               </div>
               <div className="min-w-0">
                 <p className="font-mono text-xs text-on-surface truncate">LD_ADMIN</p>

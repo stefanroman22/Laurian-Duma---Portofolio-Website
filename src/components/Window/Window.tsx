@@ -1,5 +1,5 @@
 import { motion, useDragControls, useMotionValue } from 'framer-motion'
-import type { ComponentType } from 'react'
+import { useLayoutEffect, useRef, type ComponentType } from 'react'
 import { WindowTitleBar } from './WindowTitleBar'
 import { useWindowStore } from '../../stores/useWindowStore'
 
@@ -37,6 +37,27 @@ export function Window({
   const y = useMotionValue(position.y)
   const w = useMotionValue(size.width)
   const h = useMotionValue(size.height)
+
+  // Measure intrinsic content height on mount so content windows open at a
+  // size that fits their content with no scrollbar. Terminal keeps its default.
+  const contentInnerRef = useRef<HTMLDivElement>(null)
+  const autosizedRef = useRef(false)
+
+  useLayoutEffect(() => {
+    if (id === 'terminal' || autosizedRef.current) return
+    const measure = () => {
+      const el = contentInnerRef.current
+      if (!el) return
+      const TITLE_BAR = 36
+      const target = Math.max(180, el.scrollHeight + TITLE_BAR + 4)
+      h.set(target)
+      updateSize(id, { width: Math.round(w.get()), height: target })
+      autosizedRef.current = true
+    }
+    const raf = requestAnimationFrame(measure)
+    return () => cancelAnimationFrame(raf)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (isMinimized) return null
 
@@ -120,9 +141,22 @@ export function Window({
           onMinimize={() => minimizeWindow(id)}
         />
       </div>
-      <div className="absolute inset-0 top-9 overflow-auto bg-surface-container-low">
-        <Component />
-      </div>
+      {id === 'terminal' ? (
+        /* Terminal: fills every pixel below title bar — no padding, no gap */
+        <div className="absolute inset-0 top-9 overflow-hidden">
+          <Component />
+        </div>
+      ) : (
+        /* Content windows: same absolute-fill layout as terminal so height:h
+           drives the box. Inner ref is measured on mount to pick an initial
+           size that fits the content without a scrollbar. User can then
+           resize freely via the same handles. */
+        <div className="absolute inset-0 top-9 overflow-auto os-scrollbar bg-surface-container-low">
+          <div ref={contentInnerRef} className="p-[10px]">
+            <Component />
+          </div>
+        </div>
+      )}
       {HANDLES.map(({ dir, cls }) => (
         <div
           key={dir}
