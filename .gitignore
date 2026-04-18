@@ -26,3 +26,6 @@ dist-ssr
 # Local tooling & Windows artifacts
 .claude/
 nul
+
+# Auto-Config Agent output (regenerable via backend/agent/scan.py)
+cms-provision.json

@@ -2,12 +2,33 @@
   "projectSlug": "laurian-duma-portfolio",
   "endpoint": "http://localhost:8001/content",
   "services": {
-    "cv": "key_value",
-    "skills": "key_value",
-    "experience": "repeater",
-    "projects_list": "repeater",
-    "hobbies": "repeater",
-    "hero_image": "image",
-    "contact_form": "email_config"
+    "cv": {
+      "type": "key_value",
+      "page": "General"
+    },
+    "hero_image": {
+      "type": "image",
+      "page": "General"
+    },
+    "skills": {
+      "type": "key_value",
+      "page": "About"
+    },
+    "experience": {
+      "type": "repeater",
+      "page": "Experience"
+    },
+    "projects_list": {
+      "type": "repeater",
+      "page": "Projects"
+    },
+    "hobbies": {
+      "type": "repeater",
+      "page": "Hobbies"
+    },
+    "contact_form": {
+      "type": "email_config",
+      "page": "Contact"
+    }
   }
 }
