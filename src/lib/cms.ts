@@ -43,19 +43,28 @@ let _cache: CacheEntry | null = null
 // With ETag, a "no change" revalidation is ~10 ms and costs no bandwidth.
 const REVALIDATE_MS = 10_000  // 10 seconds
 
-const CMS_URL = `${cmsConfig.endpoint}/${cmsConfig.projectSlug}`
+// Env-var-first URL resolution. VITE_CMS_ENDPOINT (set on Vercel by the CMS
+// onboarding agent) holds the full URL including slug + optional /draft suffix.
+// When unset, fall back to the project-local cms.config.json.
+const ENV_ENDPOINT = (import.meta.env?.VITE_CMS_ENDPOINT as string | undefined) ?? ''
+const PREVIEW_TOKEN = (import.meta.env?.VITE_CMS_PREVIEW_TOKEN as string | undefined) ?? ''
+const CMS_URL = ENV_ENDPOINT || `${cmsConfig.endpoint}/${cmsConfig.projectSlug}`
 
 // ── Core fetch (ETag-aware) ───────────────────────────────────────────────────
 
 /**
  * Fetches content from the CMS.
  * Sends If-None-Match when an ETag is cached — server returns 304 if unchanged.
+ * On preview deployments, sends X-CMS-Preview-Token so the CMS returns drafts.
  * Returns null on 304 (caller should keep using cached data).
  */
 async function fetchCMS(): Promise<CMSContent | null> {
   const headers: Record<string, string> = { Accept: 'application/json' }
   if (_cache?.etag) {
     headers['If-None-Match'] = _cache.etag
+  }
+  if (PREVIEW_TOKEN) {
+    headers['X-CMS-Preview-Token'] = PREVIEW_TOKEN
   }
 
   const res = await fetch(CMS_URL, {
