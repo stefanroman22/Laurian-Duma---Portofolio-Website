@@ -1,7 +1,10 @@
-import { useState, type ImgHTMLAttributes } from 'react'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, type HTMLMotionProps } from 'framer-motion'
 
-type Props = Omit<ImgHTMLAttributes<HTMLImageElement>, 'onLoad' | 'onError'> & {
+// Use framer-motion's HTMLMotionProps so animation-related props (onAnimationStart,
+// onAnimationEnd, drag handlers, etc.) have motion-compatible types rather than the
+// native DOM event types. Omit the bits we declare ourselves below.
+type Props = Omit<HTMLMotionProps<'img'>, 'onLoad' | 'onError' | 'animate' | 'initial' | 'transition'> & {
   onError?: () => void
 }
 
