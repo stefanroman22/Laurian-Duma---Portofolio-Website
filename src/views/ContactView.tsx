@@ -4,7 +4,16 @@ import { useCMSContent, withFallback } from '../lib/cms'
 
 const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`)
 
-const FORMS_ENDPOINT = 'https://cms.romantechnologies.com/forms/laurian-duma-portfolio/contact_form'
+// Derive forms endpoint from VITE_CMS_ENDPOINT when set by Vercel, else use
+// the CMS public base. VITE_CMS_ENDPOINT looks like:
+//   https://cms-backend-roman.vercel.app/content/laurian-duma-portfolio[/draft]
+// We want:
+//   <host>/forms/laurian-duma-portfolio/contact_form
+const CMS_ENDPOINT_ENV = (import.meta.env?.VITE_CMS_ENDPOINT as string | undefined) ?? ''
+const CMS_HOST = CMS_ENDPOINT_ENV
+  ? CMS_ENDPOINT_ENV.replace(/\/content\/[^/]+(\/draft)?$/, '')
+  : 'https://cms-backend-roman.vercel.app'
+const FORMS_ENDPOINT = `${CMS_HOST}/forms/laurian-duma-portfolio/contact_form`
 
 export function ContactView() {
   const { data: cms } = useCMSContent()
