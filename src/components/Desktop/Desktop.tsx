@@ -5,6 +5,8 @@ import { useCMSContent } from '../../lib/cms'
 import { registerWindow } from '../../constants/windowRegistry'
 import { WindowManager } from '../Window/WindowManager'
 import { Taskbar } from './Taskbar'
+import { EncryptedBrand } from './EncryptedBrand'
+import { FadeInImage } from '../FadeInImage'
 import { AboutView } from '../../views/AboutView'
 import { ProjectsView } from '../../views/ProjectsView'
 import { ExperienceView } from '../../views/ExperienceView'
@@ -111,9 +113,8 @@ export function Desktop() {
       {/* ── TOP NAVBAR ── */}
       <header className="flex-shrink-0 h-10 bg-surface-container-low flex items-center px-4 gap-6 z-[10000]">
         {/* Brand */}
-        <div className="flex items-center gap-2">
-          <span className="text-tertiary text-sm" aria-hidden="true">⚡</span>
-          <span className="font-mono text-xs text-tertiary tracking-widest select-none hidden sm:inline">GHOST_SHELL_OS</span>
+        <div className="flex items-center">
+          <EncryptedBrand />
         </div>
         {/* Nav tabs */}
         <nav className="hidden sm:flex items-center gap-1 flex-1" aria-label="OS navigation">
@@ -147,7 +148,7 @@ export function Desktop() {
             <div className="flex items-center gap-2 mb-2">
               <div className="w-8 h-8 rounded-sm bg-primary/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
                 {heroUrl && !heroError ? (
-                  <img
+                  <FadeInImage
                     src={heroUrl}
                     alt="Laurian Duma"
                     className="w-full h-full object-cover"

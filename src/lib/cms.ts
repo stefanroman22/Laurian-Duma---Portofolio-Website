@@ -172,3 +172,32 @@ export function getService<T extends CMSEntry>(
 export function withFallback<T>(live: T | null | undefined, fallback: T): T {
   return live ?? fallback
 }
+
+/**
+ * Normalises a key_value service's `entries` into a plain Record<string,string>.
+ * The CMS returns entries as either an array of `{key, value}` pairs (current
+ * shape) or a plain object map (legacy). Both are accepted.
+ */
+export function entriesToRecord(
+  entries: unknown,
+): Record<string, string> | undefined {
+  if (!entries) return undefined
+  if (Array.isArray(entries)) {
+    const out: Record<string, string> = {}
+    for (const item of entries) {
+      if (item && typeof item === 'object' && 'key' in item && 'value' in item) {
+        const k = String((item as { key: unknown }).key)
+        const v = String((item as { value: unknown }).value)
+        if (k) out[k] = v
+      }
+    }
+    return out
+  }
+  if (typeof entries === 'object') {
+    const rec = entries as Record<string, unknown>
+    const out: Record<string, string> = {}
+    for (const [k, v] of Object.entries(rec)) out[k] = String(v)
+    return out
+  }
+  return undefined
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { CV_DATA } from '../constants/cv'
-import { useCMSContent, withFallback } from '../lib/cms'
+import { useCMSContent, withFallback, entriesToRecord } from '../lib/cms'
 
 const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`)
 
@@ -17,7 +17,7 @@ const FORMS_ENDPOINT = `${CMS_HOST}/forms/laurian-duma-portfolio/contact_form`
 
 export function ContactView() {
   const { data: cms } = useCMSContent()
-  const cvEntries = (cms?.content.cv as { entries?: Record<string, string> } | undefined)?.entries
+  const cvEntries = entriesToRecord((cms?.content.cv as { entries?: unknown } | undefined)?.entries)
   const email    = withFallback(cvEntries?.email,    CV_DATA.email)
   const github   = withFallback(cvEntries?.github,   CV_DATA.github)
   const linkedin = withFallback(cvEntries?.linkedin, CV_DATA.linkedin)

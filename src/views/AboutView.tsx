@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { CV_DATA } from '../constants/cv'
-import { useCMSContent, withFallback } from '../lib/cms'
+import { useCMSContent, withFallback, entriesToRecord } from '../lib/cms'
+import { FadeInImage } from '../components/FadeInImage'
 
 const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`)
 
@@ -19,7 +20,7 @@ export function AboutView() {
 
   const heroUrl = (cms?.content.hero_image as { url?: string } | undefined)?.url ?? null
 
-  const cvEntries = (cms?.content.cv as { entries?: Record<string, string> } | undefined)?.entries
+  const cvEntries = entriesToRecord((cms?.content.cv as { entries?: unknown } | undefined)?.entries)
   const name     = withFallback(cvEntries?.name,     CV_DATA.name)
   const title    = withFallback(cvEntries?.title,    CV_DATA.title)
   const summary  = withFallback(cvEntries?.summary,  CV_DATA.summary)
@@ -27,9 +28,9 @@ export function AboutView() {
   const github   = withFallback(cvEntries?.github,   CV_DATA.github)
   const linkedin = withFallback(cvEntries?.linkedin, CV_DATA.linkedin)
 
-  const skillsEntries = (cms?.content.skills as { entries?: Record<string, string> } | undefined)?.entries
+  const skillsEntries = entriesToRecord((cms?.content.skills as { entries?: unknown } | undefined)?.entries)
   const skills = skillsEntries
-    ? Object.entries(skillsEntries).map(([code, label]) => ({ code, label, status: 'ACTIVE' }))
+    ? Object.entries(skillsEntries).map(([code, label]) => ({ code, label: String(label), status: 'ACTIVE' }))
     : SKILLS_FALLBACK
   return (
     <div className="font-mono text-xs h-full flex flex-col gap-3 min-h-0">
@@ -54,7 +55,7 @@ export function AboutView() {
             <div className="absolute inset-0 terminal-scanlines pointer-events-none" aria-hidden="true" />
             {/* ID avatar / hero photo */}
             {heroUrl && !heroError ? (
-              <img
+              <FadeInImage
                 src={heroUrl}
                 alt="Laurian Duma"
                 className="absolute inset-0 w-full h-full object-cover object-top"
