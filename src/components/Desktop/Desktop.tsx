@@ -98,7 +98,7 @@ export function Desktop() {
     }
   }
 
-  const navTabs = ['system', 'network', 'storage']
+  const navTabs = ['system', 'network']
   const sidebarItems = [
     { id: 'terminal', label: '/ root' },
     { id: 'about',    label: '/ about' },
