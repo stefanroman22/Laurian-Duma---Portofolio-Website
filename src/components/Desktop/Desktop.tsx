@@ -125,7 +125,7 @@ export function Desktop() {
               className={[
                 'px-3 py-1 font-mono text-xs uppercase tracking-widest transition-colors',
                 tab === activeNav
-                  ? 'text-pink-500 border-b border-primary'
+                  ? 'text-blue-500 border-b border-primary'
                   : 'text-on-surface-variant hover:text-on-surface',
               ].join(' ')}
             >
