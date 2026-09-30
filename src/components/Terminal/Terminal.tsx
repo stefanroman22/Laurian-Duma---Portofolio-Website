@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, type KeyboardEvent } from 'react'
-import { parseCommand } from './commandParser'
+import { parseCommand, prettyPath } from './commandParser'
 import { useWindowStore } from '../../stores/useWindowStore'
 import { getWindowEntry } from '../../constants/windowRegistry'
 
@@ -15,6 +15,7 @@ export function Terminal() {
     { id: 1, text: "Type 'help' for available commands.", isInput: false },
   ])
   const [input, setInput] = useState('')
+  const [cwd, setCwd] = useState('')
   const [cmdHistory, setCmdHistory] = useState<string[]>([])
   const [historyIdx, setHistoryIdx] = useState(-1)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -37,9 +38,11 @@ export function Terminal() {
     const cmd = input.trim()
     if (!cmd) return
 
-    addOutputLines([`$ ${input}`], true)
+    addOutputLines([`[LD@ghost ${prettyPath(cwd)}]$ ${input}`], true)
 
-    const result = parseCommand(input)
+    const result = parseCommand(input, cwd)
+
+    if (result.cwd !== undefined) setCwd(result.cwd)
 
     if (result.sideEffect?.type === 'clear') {
       setLines([])
@@ -100,7 +103,7 @@ export function Terminal() {
           ))}
         </div>
         <div className="flex items-center mt-1 pt-1">
-          <span className="text-primary mr-2 select-none">[LD@ghost ~]$</span>
+          <span className="text-primary mr-2 select-none whitespace-nowrap">[LD@ghost {prettyPath(cwd)}]$</span>
           <input
             ref={inputRef}
             value={input}
