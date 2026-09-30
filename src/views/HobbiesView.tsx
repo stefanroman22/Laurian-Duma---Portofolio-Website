@@ -1,5 +1,6 @@
 import { HOBBIES } from '../constants/hobbies'
 import { useCMSContent } from '../lib/cms'
+import { RichText } from '../lib/cms-rich-text'
 
 export function HobbiesView() {
   const { data: cms } = useCMSContent()
@@ -25,7 +26,7 @@ export function HobbiesView() {
             <span className="text-2xl leading-tight shrink-0" aria-hidden="true">{hobby.icon}</span>
             <div className="space-y-1">
               <p className="text-sm text-on-surface uppercase tracking-wide">{hobby.name}</p>
-              <p className="text-sm text-on-surface-variant font-sans leading-relaxed">{hobby.description}</p>
+              <RichText as="div" format="rich" value={hobby.description} className="text-sm text-on-surface-variant font-sans leading-relaxed" />
             </div>
           </div>
         ))}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { CV_DATA } from '../constants/cv'
 import { useCMSContent, withFallback, entriesToRecord } from '../lib/cms'
 import { FadeInImage } from '../components/FadeInImage'
+import { RichText } from '../lib/cms-rich-text'
 
 const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`)
 
@@ -102,9 +103,7 @@ export function AboutView() {
           <div className="glass-panel rounded-sm p-3 flex-1">
             <p className="text-[10px] text-tertiary tracking-widest mb-2">SUMMARY_REPORT</p>
             <div className="w-8 h-px bg-tertiary/40 mb-3" />
-            <p className="text-on-surface-variant font-sans text-xs leading-relaxed">
-              {summary}
-            </p>
+            <RichText as="div" format="rich" value={summary} className="text-on-surface-variant font-sans text-xs leading-relaxed" />
             <div className="mt-3 pt-3 border-t border-outline/20 space-y-1">
               <div className="flex gap-2">
                 <span className="text-[10px] text-on-surface-variant w-14 shrink-0">CONTACT:</span>

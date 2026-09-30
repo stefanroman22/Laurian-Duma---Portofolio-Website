@@ -1,0 +1,9 @@
+{
+  "repeaters": {
+    "hobbies": { "description": "richtext" },
+    "projects_list": { "description": "richtext" }
+  },
+  "key_values": {
+    "cv": { "summary": "rich" }
+  }
+}

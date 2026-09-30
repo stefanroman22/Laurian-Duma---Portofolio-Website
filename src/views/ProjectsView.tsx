@@ -1,5 +1,6 @@
 import { PROJECTS } from '../constants/projects'
 import { useCMSContent } from '../lib/cms'
+import { RichText } from '../lib/cms-rich-text'
 
 const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`)
 
@@ -39,7 +40,7 @@ export function ProjectsView() {
               </a>
             )}
           </div>
-          <p className="text-sm text-on-surface-variant font-sans leading-relaxed">{project.description}</p>
+          <RichText as="div" format="rich" value={project.description} className="text-sm text-on-surface-variant font-sans leading-relaxed" />
           <div className="flex flex-wrap gap-1.5">
             {project.tags.map((tag) => (
               <span key={tag} className="px-2 py-0.5 bg-surface-container-high text-tertiary text-xs rounded-sm">

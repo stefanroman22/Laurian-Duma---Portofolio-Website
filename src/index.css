@@ -98,3 +98,13 @@ body {
 .os-scrollbar::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+:root {
+  --cms-rich-strong: #ffffff;
+  --cms-rich-strong-weight: 600;
+  --cms-rich-link: #86adff;
+  --cms-rich-link-hover: #6f9fff;
+  --cms-rich-marker: #69fd5d;
+  --cms-rich-quote-border: #69fd5d;
+  --cms-rich-rule: #777575;
+}
