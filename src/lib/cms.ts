@@ -13,6 +13,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import cmsConfig from '../../cms.config.json'
+import { readTheme, type CmsTheme } from './cms-rich-text'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -171,6 +172,11 @@ export function getService<T extends CMSEntry>(
  */
 export function withFallback<T>(live: T | null | undefined, fallback: T): T {
   return live ?? fallback
+}
+
+/** The project theme (`general_theme`): palette + fonts, or null when absent. */
+export function theme(cms: CMSContent | null): CmsTheme | null {
+  return readTheme(cms?.content.general_theme)
 }
 
 /**

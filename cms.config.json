@@ -10,6 +10,10 @@
       "type": "image",
       "page": "General"
     },
+    "general_theme": {
+      "type": "theme",
+      "page": "General"
+    },
     "skills": {
       "type": "key_value",
       "page": "About"

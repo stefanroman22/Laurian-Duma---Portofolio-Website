@@ -1,3 +1,5 @@
+import type { CmsIconValue } from '../lib/cms-rich-text'
+
 export interface CV {
   name: string
   title: string
@@ -29,4 +31,5 @@ export interface Hobby {
   name: string
   description: string
   icon: string
+  iconImage?: CmsIconValue | null
 }

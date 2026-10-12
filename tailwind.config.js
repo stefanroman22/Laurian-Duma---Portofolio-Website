@@ -47,8 +47,8 @@ export default {
         'outline-variant': '#494847',
       },
       fontFamily: {
-        display: ['"Space Grotesk"', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
+        display: ['var(--cms-font-heading, "Space Grotesk", sans-serif)'],
+        sans: ['var(--cms-font-body, Inter, sans-serif)'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       fontSize: {

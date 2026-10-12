@@ -19,7 +19,9 @@ export function AboutView() {
   const { data: cms } = useCMSContent()
   const [heroError, setHeroError] = useState(false)
 
-  const heroUrl = (cms?.content.hero_image as { url?: string } | undefined)?.url ?? null
+  const hero = cms?.content.hero_image as { url?: string; alt?: string } | undefined
+  const heroUrl = hero?.url ?? null
+  const heroAlt = hero?.alt || 'Laurian Duma'
 
   const cvEntries = entriesToRecord((cms?.content.cv as { entries?: unknown } | undefined)?.entries)
   const name     = withFallback(cvEntries?.name,     CV_DATA.name)
@@ -58,7 +60,7 @@ export function AboutView() {
             {heroUrl && !heroError ? (
               <FadeInImage
                 src={heroUrl}
-                alt="Laurian Duma"
+                alt={heroAlt}
                 className="absolute inset-0 w-full h-full object-cover object-top"
                 onError={() => setHeroError(true)}
               />

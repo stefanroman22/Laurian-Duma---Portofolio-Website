@@ -45,7 +45,9 @@ export function Desktop() {
   const { initFolders } = useFolderStore()
   const { openWindow, windows } = useWindowStore()
   const { data: cms } = useCMSContent()
-  const heroUrl = (cms?.content.hero_image as { url?: string } | undefined)?.url ?? null
+  const hero = cms?.content.hero_image as { url?: string; alt?: string } | undefined
+  const heroUrl = hero?.url ?? null
+  const heroAlt = hero?.alt || 'Laurian Duma'
   const [heroError, setHeroError] = useState(false)
   const [activeNav, setActiveNav] = useState('system')
   // Computed once — heights capped to 45 % of viewport at mount time.
@@ -150,7 +152,7 @@ export function Desktop() {
                 {heroUrl && !heroError ? (
                   <FadeInImage
                     src={heroUrl}
-                    alt="Laurian Duma"
+                    alt={heroAlt}
                     className="w-full h-full object-cover"
                     onError={() => setHeroError(true)}
                   />
