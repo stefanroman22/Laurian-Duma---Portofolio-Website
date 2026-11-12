@@ -25,7 +25,7 @@ export function ExperienceView() {
       {entries.map((entry, idx) => {
         const isActive = entry.period.includes('Present')
         return (
-          <div key={entry.id} className="bg-surface-container rounded-sm p-4 space-y-3">
+          <div key={entry.id} className="page-card bg-surface-container rounded-sm p-4 space-y-3">
             {/* Top row: status + period */}
             <div className="flex items-center justify-between gap-2">
               <span className={[

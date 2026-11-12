@@ -3,6 +3,7 @@ import { CV_DATA } from '../constants/cv'
 import { useCMSContent, withFallback, entriesToRecord } from '../lib/cms'
 import { FadeInImage } from '../components/FadeInImage'
 import { RichText } from '../lib/cms-rich-text'
+import { homePageOptions } from '../lib/pageOptions'
 
 const toHref = (url: string) => (url.startsWith('http') ? url : `https://${url}`)
 
@@ -35,6 +36,7 @@ export function AboutView() {
   const skills = skillsEntries
     ? Object.entries(skillsEntries).map(([code, label]) => ({ code, label: String(label), status: 'ACTIVE' }))
     : SKILLS_FALLBACK
+  const options = homePageOptions(cms)
   return (
     <div className="font-mono text-xs h-full flex flex-col gap-3 min-h-0">
       {/* Classification bar */}
@@ -48,7 +50,7 @@ export function AboutView() {
       </div>
 
       {/* Main two-column layout */}
-      <div className="flex gap-4 flex-1 min-h-0">
+      <div className={['flex gap-4 flex-1 min-h-0', options.photo_position === 'right' ? 'flex-row-reverse' : ''].join(' ').trim()}>
         {/* Left — photo + identity */}
         <div className="w-40 shrink-0 flex flex-col gap-2">
           {/* Photo placeholder — styled as classified ID photo */}
@@ -83,7 +85,7 @@ export function AboutView() {
           </div>
 
           {/* Name / title overlay */}
-          <div className="bg-surface-container rounded-sm p-2">
+          <div className="page-card bg-surface-container rounded-sm p-2">
             <p className="text-xs text-on-surface font-medium">{name}</p>
             <p className="text-[10px] text-primary mt-0.5 leading-tight">{title}</p>
           </div>
@@ -102,7 +104,7 @@ export function AboutView() {
         {/* Right — summary + links */}
         <div className="flex-1 min-w-0 flex flex-col gap-3">
           {/* Summary report panel */}
-          <div className="glass-panel rounded-sm p-3 flex-1">
+          <div className="page-card glass-panel rounded-sm p-3 flex-1">
             <p className="text-[10px] text-tertiary tracking-widest mb-2">SUMMARY_REPORT</p>
             <div className="w-8 h-px bg-tertiary/40 mb-3" />
             <RichText as="div" format="rich" value={summary} className="text-on-surface-variant font-sans text-xs leading-relaxed" />
@@ -129,23 +131,25 @@ export function AboutView() {
           </div>
 
           {/* CODE_CERTIFICATIONS grid */}
-          <div>
-            <p className="text-[10px] text-on-surface-variant tracking-widest mb-2">CODE_CERTIFICATIONS</p>
-            <div className="grid grid-cols-3 gap-1.5">
-              {skills.map((s) => (
-                <div key={s.code} className="bg-surface-container rounded-sm p-2">
-                  <p className="text-[10px] text-on-surface font-medium">{s.code}</p>
-                  <p className="text-[10px] text-on-surface-variant">{s.label}</p>
-                  <p className="text-[10px] text-tertiary mt-0.5">● {s.status}</p>
-                </div>
-              ))}
+          {options.show_skills && (
+            <div>
+              <p className="text-[10px] text-on-surface-variant tracking-widest mb-2">CODE_CERTIFICATIONS</p>
+              <div className="grid grid-cols-3 gap-1.5">
+                {skills.map((s) => (
+                  <div key={s.code} className="page-card bg-surface-container rounded-sm p-2">
+                    <p className="text-[10px] text-on-surface font-medium">{s.code}</p>
+                    <p className="text-[10px] text-on-surface-variant">{s.label}</p>
+                    <p className="text-[10px] text-tertiary mt-0.5">● {s.status}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
       {/* CLEARANCE_REGISTER footer */}
-      <div className="shrink-0 flex items-center gap-4 px-2 py-1.5 bg-surface-container rounded-sm text-[10px]">
+      <div className="page-card shrink-0 flex items-center gap-4 px-2 py-1.5 bg-surface-container rounded-sm text-[10px]">
         <span className="text-on-surface-variant flex items-center gap-1">
           <span aria-hidden="true">🔒</span> CLEARANCE_REGISTER
         </span>

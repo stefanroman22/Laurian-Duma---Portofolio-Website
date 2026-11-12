@@ -55,7 +55,7 @@ export function ContactView() {
       <div className="space-y-2">
         <a
           href={`mailto:${email}`}
-          className="flex items-center gap-3 p-4 bg-surface-container rounded-sm hover:bg-surface-container-high transition-colors group cyber-glow"
+          className="page-card flex items-center gap-3 p-4 bg-surface-container rounded-sm hover:bg-surface-container-high transition-colors group cyber-glow"
         >
           <span className="text-xs text-primary w-20 shrink-0 tracking-wide">EMAIL</span>
           <span className="text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">{email}</span>
@@ -64,7 +64,7 @@ export function ContactView() {
           href={toHref(github)}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-3 p-4 bg-surface-container rounded-sm hover:bg-surface-container-high transition-colors group cyber-glow"
+          className="page-card flex items-center gap-3 p-4 bg-surface-container rounded-sm hover:bg-surface-container-high transition-colors group cyber-glow"
         >
           <span className="text-xs text-primary w-20 shrink-0 tracking-wide">GITHUB</span>
           <span className="text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">{github}</span>
@@ -73,7 +73,7 @@ export function ContactView() {
           href={toHref(linkedin)}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-3 p-4 bg-surface-container rounded-sm hover:bg-surface-container-high transition-colors group cyber-glow"
+          className="page-card flex items-center gap-3 p-4 bg-surface-container rounded-sm hover:bg-surface-container-high transition-colors group cyber-glow"
         >
           <span className="text-xs text-primary w-20 shrink-0 tracking-wide">LINKEDIN</span>
           <span className="text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">{linkedin}</span>
@@ -81,7 +81,7 @@ export function ContactView() {
       </div>
 
       {/* Contact form */}
-      <div className="bg-surface-container rounded-sm p-4 space-y-3">
+      <div className="page-card bg-surface-container rounded-sm p-4 space-y-3">
         <p className="text-xs text-primary tracking-wide">SEND_MESSAGE</p>
         {status === 'sent' ? (
           <p className="text-sm text-tertiary font-sans">✓ Message transmitted successfully.</p>

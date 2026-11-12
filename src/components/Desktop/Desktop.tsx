@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFolderStore } from '../../stores/useFolderStore'
 import { useWindowStore } from '../../stores/useWindowStore'
 import { useCMSContent } from '../../lib/cms'
+import { homePageOptions, pageSurface } from '../../lib/pageOptions'
 import { registerWindow } from '../../constants/windowRegistry'
 import { WindowManager } from '../Window/WindowManager'
 import { Taskbar } from './Taskbar'
@@ -48,6 +49,7 @@ export function Desktop() {
   const hero = cms?.content.hero_image as { url?: string; alt?: string } | undefined
   const heroUrl = hero?.url ?? null
   const heroAlt = hero?.alt || 'Laurian Duma'
+  const surface = pageSurface(homePageOptions(cms))
   const [heroError, setHeroError] = useState(false)
   const [activeNav, setActiveNav] = useState('system')
   // Computed once — heights capped to 45 % of viewport at mount time.
@@ -111,7 +113,10 @@ export function Desktop() {
   ]
 
   return (
-    <div className="fixed inset-0 os-desktop-bg overflow-hidden flex flex-col">
+    <div
+      className={['fixed inset-0 os-desktop-bg overflow-hidden flex flex-col', surface.className].join(' ').trim()}
+      style={surface.style}
+    >
       {/* ── TOP NAVBAR ── */}
       <header className="flex-shrink-0 h-10 bg-surface-container-low flex items-center px-4 gap-6 z-[10000]">
         {/* Brand */}

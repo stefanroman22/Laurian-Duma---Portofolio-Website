@@ -33,6 +33,17 @@
     "contact_form": {
       "type": "email_config",
       "page": "Contact"
+    },
+    "home_page_options": {
+      "type": "options",
+      "page": "Home",
+      "schema": {
+        "background": "color",
+        "card_background": "color",
+        "content_width": "select",
+        "photo_position": "select",
+        "show_skills": "toggle"
+      }
     }
   }
 }

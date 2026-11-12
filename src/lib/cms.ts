@@ -9,6 +9,14 @@
  * - On page refresh: module cache is cleared; fresh fetch runs automatically.
  * - Result: changes made in the CMS are visible on the very next page refresh,
  *   and in-session views revalidate every REVALIDATE_MS milliseconds.
+ *
+ * Display options (ADR-0013): layout and colour choices live in the
+ * `home_page_options` service (CMS tab "Home") and are read only through
+ * src/lib/pageOptions.ts (kit `readOptions`; defaults = the designed look).
+ * Desktop background and card colour go on the desktop wrapper as CSS
+ * variables (index.css "Client-chosen colours"); content_width sets the
+ * width content windows open at; the About window reads photo_position and
+ * show_skills.
  */
 
 import { useState, useEffect, useRef } from 'react'

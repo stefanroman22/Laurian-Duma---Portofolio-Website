@@ -108,3 +108,52 @@ body {
   --cms-rich-quote-border: #69fd5d;
   --cms-rich-rule: #777575;
 }
+
+/* ── Client-chosen colours (CMS display options, ADR-0013) ──
+   Set by pageSurface() in lib/pageOptions.ts as CSS variables on the desktop
+   wrapper. The site has one dark design (no light/dark switch), so they always
+   apply. Card text colours are computed there to stay at 4.5:1. */
+.os-desktop-bg.page-custom-bg {
+  background: var(--page-bg);
+}
+
+.page-custom-card .page-card {
+  background: var(--page-card-bg);
+  color: var(--page-card-ink);
+  --cms-rich-strong: var(--page-card-ink);
+  --cms-rich-link: var(--page-card-primary);
+  --cms-rich-link-hover: var(--page-card-primary);
+  --cms-rich-marker: var(--page-card-tertiary);
+  --cms-rich-quote-border: var(--page-card-tertiary);
+  --cms-rich-rule: var(--page-card-muted);
+}
+.page-custom-card .page-card .bg-surface-container-high,
+.page-custom-card .page-card.hover\:bg-surface-container-high:hover {
+  background: var(--page-card-chip);
+}
+.page-custom-card .page-card .text-on-surface-variant,
+.page-custom-card .page-card .text-outline {
+  color: var(--page-card-muted);
+}
+.page-custom-card .page-card .text-on-surface,
+.page-custom-card .page-card .hover\:text-on-surface:hover,
+.page-custom-card .page-card.group:hover .group-hover\:text-on-surface {
+  color: var(--page-card-ink);
+}
+.page-custom-card .page-card .text-primary,
+.page-custom-card .page-card .hover\:text-primary-container:hover {
+  color: var(--page-card-primary);
+}
+.page-custom-card .page-card .text-tertiary {
+  color: var(--page-card-tertiary);
+}
+/* Form fields keep their own dark surface, so their text stays white. */
+.page-custom-card .page-card .text-on-surface:is(input, textarea) {
+  color: #ffffff;
+}
+
+/* Client-picked text and icon colours (CMS kit >= 1.3.1). The whole site is dark,
+   so each one always uses its readable dark-theme variant (lightened to 4.5:1). */
+:root :is(.cms-rich-style, .cms-icon) {
+  --cms-color: var(--cms-color-dark);
+}

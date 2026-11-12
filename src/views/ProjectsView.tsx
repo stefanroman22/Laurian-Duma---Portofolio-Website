@@ -25,7 +25,7 @@ export function ProjectsView() {
         CLASSIFICATION: RESTRICTED // PROJECT_ARCHIVE
       </p>
       {projects.map((project) => (
-        <div key={project.id} className="bg-surface-container rounded-sm p-4 space-y-3">
+        <div key={project.id} className="page-card bg-surface-container rounded-sm p-4 space-y-3">
           <div className="flex items-start justify-between gap-3">
             <p className="text-base text-on-surface font-medium">{project.name}</p>
             {project.url && (

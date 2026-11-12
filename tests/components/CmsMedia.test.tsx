@@ -28,7 +28,7 @@ describe('CMS media fields', () => {
     content.hobbies = { _type: 'repeater', _label: 'H', items: [{ name: 'A', description: '', icon: '📷', icon_image: icon }] }
     const { container } = render(<HobbiesView />)
     const el = container.querySelector<HTMLElement>('.cms-icon')
-    expect(el?.style.backgroundColor).toBe('rgb(105, 253, 93)')
+    expect(el?.style.backgroundColor).toBe('var(--cms-color, #69fd5d)')
     expect(container.textContent).not.toContain('📷')
   })
 

@@ -2,6 +2,8 @@ import { motion, useDragControls, useMotionValue } from 'framer-motion'
 import { useLayoutEffect, useRef, type ComponentType } from 'react'
 import { WindowTitleBar } from './WindowTitleBar'
 import { useWindowStore } from '../../stores/useWindowStore'
+import { useCMSContent } from '../../lib/cms'
+import { homePageOptions, windowFit } from '../../lib/pageOptions'
 
 interface WindowProps {
   id: string
@@ -37,6 +39,9 @@ export function Window({
   const y = useMotionValue(position.y)
   const w = useMotionValue(size.width)
   const h = useMotionValue(size.height)
+  const { data: cms } = useCMSContent()
+  const contentWidth = homePageOptions(cms).content_width
+  const panelRef = useRef<HTMLDivElement>(null)
 
   // Measure intrinsic content height on mount so content windows open at a
   // size that fits their content with no scrollbar. Terminal keeps its default.
@@ -45,6 +50,14 @@ export function Window({
 
   useLayoutEffect(() => {
     if (id === 'terminal' || autosizedRef.current) return
+    // CMS content_width: open at another width (and x, for full) than designed.
+    const desktopWidth = panelRef.current?.parentElement?.clientWidth
+    const fit = desktopWidth ? windowFit(contentWidth, { x: position.x, width: size.width }, desktopWidth) : null
+    if (fit) {
+      x.set(fit.x)
+      w.set(fit.width)
+      updatePosition(id, { x: fit.x, y: y.get() })
+    }
     const measure = () => {
       const el = contentInnerRef.current
       if (!el) return
@@ -105,6 +118,7 @@ export function Window({
 
   return (
     <motion.div
+      ref={panelRef}
       key={id}
       initial={{ scale: 0.95, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
